@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1501217961 source:c:\users\jo\desktop\vac_programsgit\vac_numericalmethods\9_tridiagonal_problems\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
