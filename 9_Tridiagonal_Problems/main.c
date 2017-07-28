@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 20 // Set too high in case you want a system higher than the 6 specified
+#define N 200 // Set too high in case you want a system higher than the 6 specified
+#define del 1
+#define h .01
+#define M (1/h)
 
 void tridiagonal( float a[N], float b[N], float c[N], float f[N], int endV );
 float error( float u10, float u0, float u01, float a, float b, float c, float f, int endV);
+void helmtridiagonal( float a, float b, float c, int endV );
 
 int main()
 {
@@ -38,6 +42,9 @@ int main()
     // STEP B: Tridiagonal and printing
     tridiagonal( a, b, c, f, unknowns);
 
+    /* Problem 3 */
+    // Problem 3 is to remain the same. Please see the other Numerical Methods repository for Problem 3
+    printf("\n\nProblem 3 is to remain the same. Please see the other Numerical Methods repository for Problem 3\n");
 
 
 
@@ -49,7 +56,7 @@ void tridiagonal( float a[N], float b[N], float c[N], float f[N], int endV ){
     int i = 0; // i stands for Loop Counter
     float u[N], alpha[N], g[N];
 
-    // STEP A: Forward Step through calculates alphas and gs (cannot overwrite due to error calculations)
+    // STEP A: Forward Step through calculates alphas and gs (cannot overwrite due to error calculations requiring original a and f)
     alpha[0] = a[0];
     g[0] = f[0];
     for( i=1; i<endV; i++ ){
@@ -57,7 +64,7 @@ void tridiagonal( float a[N], float b[N], float c[N], float f[N], int endV ){
         g[i] = f[i] - ( b[i]/a[i-1] )*g[i-1];
     }
 
-    // STEP B: Backwards steps through and sets each unknown based on alphas and gs (cannot overwrite due to error calculations)
+    // STEP B: Backwards steps through and sets each unknown based on alphas and gs (cannot overwrite due to error calculations requiring original a and f)
     u[endV-1] = g[endV-1]/a[endV-1];
     for( i=endV-2; i>-1; i-- ){
         u[i] = ( g[i]-c[i]*u[i+1] )/alpha[i];
@@ -72,7 +79,7 @@ void tridiagonal( float a[N], float b[N], float c[N], float f[N], int endV ){
     printf("\n\n");
 }
 
-/// FUNCTION does the error calculation for Problems 1 and 2
+/// FUNCTION does the error calculation for Problems 1 and 2. Actual Value of Error may be incorrect. This calculation is directly from the NOTES though and is what we were instructed to use.
 float error( float u10, float u0, float u01, float a, float b, float c, float f, int endV){
     float error;
     error = fabs( b*u10 + a*u0 + c*u01 - f);
